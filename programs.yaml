@@ -1,0 +1,533 @@
+# web3-bug-bounty-programs — source of truth.
+#
+# Every entry was checked against a live program page (or the project's own
+# docs/repo) on the last_verified date. Figures come from the program page or
+# from the maintainer's own survey notes; anything unconfirmed is null and the
+# notes say "check program page" instead of inventing a number.
+#
+# Fields:
+#   name            Program name
+#   platform        Where reports are filed (Self-hosted, Immunefi, Remedy, ...)
+#   program_url     Public program page (never a contact email)
+#   scope           Short scope description
+#   scope_url       Repo or docs page describing scope
+#   reward_min      Lowest published reward in USD (null = unknown/unpublished)
+#   reward_max      Highest published reward in USD (null = unknown/unpublished)
+#   reward_notes    Tier details, caps, payout currency
+#   kyc             yes / no / unknown (whether identity verification is required,
+#                   and the notes say at which stage when known)
+#   submission_fee  Cost to file a report ("none" / amount / "check program page")
+#   status          active / gated / closed / paused / dead
+#                   gated = live program, but filing requires a fee, stake,
+#                   reputation gate, or platform verification step
+#   last_verified   YYYY-MM-DD — date the program page was last checked live
+#   notes           Anything else a hunter needs before starting
+
+programs:
+  # ---------------- ACTIVE — no fee, no gate to file ----------------
+  - name: Across
+    platform: Self-hosted
+    program_url: https://docs.across.to/introduction/bug-bounty
+    scope: Across bridge contracts (HubPool, SpokePool, adapters, verifiers)
+    scope_url: https://github.com/across-protocol/contracts
+    reward_min: 250
+    reward_max: 1000000
+    reward_notes: "Notice $0; Low $250; Medium $1,000; High $10,000; Critical up to $1,000,000."
+    kyc: "no"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: Only unprivileged loss/freeze findings with reproduction steps are eligible.
+
+  - name: Relay
+    platform: Self-hosted
+    program_url: https://docs.relay.link/security/bounties
+    scope: Relay bridge, Relay Chain, solvers, executors, oracles
+    scope_url: https://github.com/relayprotocol
+    reward_min: 500
+    reward_max: 100000
+    reward_notes: "Floor $500, cap $100,000. Severity x likelihood matrix with modifiers."
+    kyc: "yes"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: KYC + background check + tax docs required before payment (not before filing). Unprivileged exploit path only; Vaults out of scope.
+
+  - name: Marginfi
+    platform: Self-hosted
+    program_url: https://github.com/0dotxyz/marginfi-v2
+    scope: marginfi-v2 Solana lending program, cross-venue banks, SDK
+    scope_url: https://github.com/0dotxyz/marginfi-v2
+    reward_min: 10000
+    reward_max: 500000
+    reward_notes: "Critical 2% of funds at risk (min $50,000, max $500,000); High $10,000-$50,000. Paid in USDC (Critical may be paid up to 80% in token if a token exists)."
+    kyc: "no"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: Terms in the repo SECURITY.md. Long known-issues list in SECURITY.md doubles as a kill-filter — read it first.
+
+  - name: Venus
+    platform: BNB Chain Bug Bounty (HackenProof partner program)
+    program_url: https://bugbounty.bnbchain.org
+    scope: Venus Core Pool, Liquidity Hub, spoke markets, VAI (BSC)
+    scope_url: https://github.com/VenusProtocol
+    reward_min: 300
+    reward_max: 150000
+    reward_notes: "P1 Critical $20,001-$100,000; P2 $5,001-$20,000; P3 $1,001-$5,000; P4 $300-$1,000; P* Extraordinary up to $150,000 case by case. Paid in BNB."
+    kyc: "yes"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: KYC before payout only. Fully discretionary program, no escrow; fully AI-generated reports are not accepted (policy section 4.3).
+
+  - name: ListaDAO
+    platform: BNB Chain Bug Bounty (HackenProof partner program)
+    program_url: https://bugbounty.bnbchain.org/scope-policy?project=1
+    scope: lisUSD CDP, staking, Moolah vaults, StableSwap, Credit, oracles (BSC, 92-contract scope table)
+    scope_url: https://github.com/lista-dao
+    reward_min: 300
+    reward_max: 150000
+    reward_notes: "Same BNB Chain tiers as Venus: P1 $20,001-$100,000; P4 floor $300; P* up to $150,000. Paid in BNB."
+    kyc: "yes"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: KYC before payout only. Fully AI-generated reports are not accepted (policy section 4.3).
+
+  - name: Valantis STEX
+    platform: Remedy
+    program_url: https://r.xyz/bug-bounty/programs/valantis-stex
+    scope: STEXAMM + stHYPEWithdrawalModule only (HyperEVM, chain 999)
+    scope_url: https://github.com/ValantisLabs/valantis-stex
+    reward_min: null
+    reward_max: 200000
+    reward_notes: "Critical up to $200,000; High up to $50,000. Medium/Low/Info NOT eligible. Paid in USDC/USD."
+    kyc: "no"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-20"
+    notes: Launched 23 Jul 2025, non-expiring. PoC required for all reports. 4 payouts recorded. kHYPEWithdrawalModule removed from scope 26 Jun 2026.
+
+  - name: Squads V4
+    platform: Self-hosted
+    program_url: https://github.com/Squads-Protocol/v4
+    scope: Squads V4 multisig program (Solana) only
+    scope_url: https://github.com/Squads-Protocol/v4
+    reward_min: 10000
+    reward_max: 300000
+    reward_notes: "Steal Funds $300,000; Freeze Funds $200,000; Replay Attacks $25,000; Settings Modifications $10,000. Paid in 12-month locked SOL."
+    kyc: "no"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-20"
+    notes: Terms in the repo SECURITY.md. OFAC-sanctioned countries excluded. Single-program scope securing ~$10B.
+
+  - name: AUTOfinance (Tokemak)
+    platform: Remedy
+    program_url: https://r.xyz/bug-bounty/programs/tokemak
+    scope: Tokemak v2-core-pub /src (excl. Maverick, /external, /interfaces, /lens, LiquidationExecutor, /staking)
+    scope_url: https://github.com/Tokemak/v2-core-pub
+    reward_min: 25000
+    reward_max: 125000
+    reward_notes: "Critical $25,000-$125,000 (capped at 10% of economic damage); High $25,000 flat. Medium/Low/Info NOT eligible. Paid in ETH, TOKE, or stablecoins."
+    kyc: "no"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-20"
+    notes: Active since 19 Sep 2024, non-expiring. 13 payouts recorded. PoC + fix suggestion required for all reports. Local forks only.
+
+  - name: UFarm Digital
+    platform: Remedy
+    program_url: https://r.xyz/bug-bounty/programs/ufarm-digital
+    scope: UFarm-EVM-Contracts contracts/ (ETH + Arbitrum)
+    scope_url: https://github.com/UFarmDigital/UFarm-EVM-Contracts
+    reward_min: null
+    reward_max: 100000
+    reward_notes: "Critical $10,000-$100,000; High $1,000-$10,000; Medium $100-$1,000; Low up to $100. Paid in USDT."
+    kyc: "no"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-20"
+    notes: Active since 24 Feb 2025, non-expiring. 8 payouts recorded. v2 contracts relaunched 25 Aug 2026. High/Critical need a runnable PoC.
+
+  - name: BOB
+    platform: Remedy
+    program_url: https://r.xyz/bug-bounty/programs/bob
+    scope: BOB L1/L2 contracts (Proxy Admin, Batcher, Proposer, Challenger, Guardian, Bitcoin SPV utils, Relays, Token/Staking)
+    scope_url: https://github.com/bob-collective/bob
+    reward_min: null
+    reward_max: 250000
+    reward_notes: "Critical $10,000-$250,000 (10% of economic damage, min $10,000); High $2,000-$10,000; Medium $1,000-$2,000; Low up to $1,000. Paid in USDC."
+    kyc: "yes"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-20"
+    notes: KYC Required badge on the program page, but no timing stated anywhere in the public program text — confirm before hunting. Active since 16 Jul 2024. 1 payout recorded.
+
+  - name: Boba Network
+    platform: Remedy
+    program_url: https://r.xyz/bug-bounty/programs/boba-network
+    scope: Only 5 Proxy__LightBridge contracts (ETH, Boba, OP, Arbitrum deployments)
+    scope_url: https://github.com/bobanetwork/boba
+    reward_min: null
+    reward_max: 100000
+    reward_notes: "Critical $10,000-$100,000 (10% of funds affected); High up to $8,000; Medium up to $3,000; Low up to $1,000. Paid in USDC."
+    kyc: "yes"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-20"
+    notes: KYC Required badge, timing unstated. Very narrow scope — all other Boba contracts are out. Active since 19 Apr 2024. 3 payouts recorded.
+
+  - name: PancakeSwap
+    platform: Remedy
+    program_url: https://r.xyz/bug-bounty/programs/pancakeswap
+    scope: PancakeSwap V2/V3/Infinity AMM contracts and periphery
+    scope_url: https://github.com/pancakeswap/pancake-v3-contracts
+    reward_min: 20000
+    reward_max: 1000000
+    reward_notes: "Critical $20,000-$1,000,000 (5% of funds at risk; Group 1 core contracts min $50,000, Group 2 min $20,000); High up to $20,000. Medium/Low NOT eligible for smart contracts. Paid in CAKE."
+    kyc: "no"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-20"
+    notes: 0 payouts recorded in ~2.5 years on Remedy — treat the headline max with caution. The same tiers are also published on the project's Immunefi program page.
+
+  - name: Arc (Circle)
+    platform: HackerOne
+    program_url: https://hackerone.com/arc-bbp
+    scope: Arc chain, CCTP bridge (EVM + Solana + Noble + Starknet), Gateway, CPN, xReserve
+    scope_url: https://github.com/circlefin
+    reward_min: 20000
+    reward_max: 1000000
+    reward_notes: "Extreme up to $1,000,000; Critical $20,000-$200,000."
+    kyc: unknown
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: Launched Sep 2026. HackerOne Signal-gated — fresh accounts get only 3 shared trial reports; burning them without a triage means a 90-day pause. High report volume (4,765 reports/90d).
+
+  - name: Stellar
+    platform: HackerOne
+    program_url: https://hackerone.com/stellar
+    scope: All open-source repos under the stellar GitHub org + stellar.org web properties; carveout for stellar-core and Soroban (Rust)
+    scope_url: https://github.com/stellar
+    reward_min: 0
+    reward_max: 250000
+    reward_notes: "Standard tiers start at $0 (fully discretionary panel): Critical up to $25,000, High up to $15,000. Protocol carveout: Critical blockchain/DLT bugs pay 10% of funds affected, capped at $250,000. Paid in XLM."
+    kyc: "yes"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: KYC before payout only (full name, DOB, proof of address + tax forms). Consolidated onto HackerOne 7 May 2026; the old Immunefi program is deprecated. Only released/tagged code is eligible.
+
+  - name: Chainlink
+    platform: HackerOne
+    program_url: https://hackerone.com/chainlink
+    scope: chainlink-evm + chainlink-solana contracts (Data Feeds, VRF, Automation, Functions), Go node, staking v0.1
+    scope_url: https://github.com/smartcontractkit/chainlink
+    reward_min: null
+    reward_max: 100000
+    reward_notes: "Top reward $100,000. Floor unverified (older reports cite $100 — check program page)."
+    kyc: unknown
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: Live since May 2019. CCIP is NOT on HackerOne — it is Immunefi-only. Same contracts pay up to $3M on Immunefi (verification-gated route).
+
+  - name: Anchor framework
+    platform: Self-hosted
+    program_url: https://github.com/arcium-hq/anchor
+    scope: Anchor framework code only (Solana) — ownership/discriminator/memory-safety bypasses
+    scope_url: https://github.com/arcium-hq/anchor
+    reward_min: 100
+    reward_max: 117600
+    reward_notes: "Critical 118-1,176 SOL; Medium 59-294 SOL; Low 1-59 SOL. Paid in 12-month locked SOL. USD figures approximate at ~$100/SOL (Oct-Nov 2026 reference)."
+    kyc: "yes"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: Terms in the repo SECURITY.md. KYC required before payout only. Repo moved from coral-xyz to arcium-hq (Arcium now maintains Anchor). Must be a bug in the framework itself, not user code.
+
+  - name: ERC-4337 Account Abstraction
+    platform: HackenProof
+    program_url: https://hackenproof.com/programs/account-abstraction-bugs
+    scope: eth-infinitism/account-abstraction repo, core + utils folders only, pinned tags v0.6.0-v0.9.0
+    scope_url: https://github.com/eth-infinitism/account-abstraction
+    reward_min: 1000
+    reward_max: 250000
+    reward_notes: "Critical up to $250,000; range $1,000-$250,000. No per-tier table in program text."
+    kyc: "yes"
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-19"
+    notes: Run by the Ethereum Foundation (a distinct program from the main EF bounty). Mandatory KYC at payout. $73,000 paid to date. No reputation gate observed — the only HackenProof entry here with positive no-gate evidence.
+
+  - name: Ethereum Foundation
+    platform: Self-hosted
+    program_url: https://ethereum.org/en/bug-bounty/
+    scope: Ethereum protocol clients, consensus + execution layer, ethereum.org
+    scope_url: https://github.com/ethereum
+    reward_min: null
+    reward_max: null
+    reward_notes: Check program page for current tiers.
+    kyc: unknown
+    submission_fee: none
+    status: active
+    last_verified: "2026-11-20"
+    notes: The main EF program (protocol clients). Distinct from the ERC-4337 HackenProof program listed separately.
+
+  # ---------------- GATED — live, but filing costs something ----------------
+  - name: NEAR Intents — Smart Contracts
+    platform: HackenProof
+    program_url: https://hackenproof.com/programs/near-intents-smart-contracts
+    scope: NEAR Intents settlement contract (Rust)
+    scope_url: https://github.com/defuse-protocol
+    reward_min: 100
+    reward_max: 300000
+    reward_notes: "Critical $100,000-$300,000; High $20,000-$100,000; Medium $1,000-$20,000; Low $100-$1,000. High/Critical capped at 10% of funds at risk. $500,200 paid to date."
+    kyc: unknown
+    submission_fee: $5/report
+    status: gated
+    last_verified: "2026-11-20"
+    notes: $5 submission fee per report. No reputation gate. Payout may be NEAR vested 1 year; payout KYC possible.
+
+  - name: NEAR Intents — Bridges
+    platform: HackenProof
+    program_url: https://hackenproof.com/programs/near-intents-bridges
+    scope: NEAR Intents MPC + Omni Bridge
+    scope_url: https://github.com/defuse-protocol
+    reward_min: null
+    reward_max: 300000
+    reward_notes: "Headline Critical up to $300,000, but the program rules text caps Critical at $100,000 — the $300k figure is misleading. High $5,000-$10,000."
+    kyc: unknown
+    submission_fee: $5/report
+    status: gated
+    last_verified: "2026-11-20"
+    notes: $5 submission fee per report. No reputation gate.
+
+  - name: Citrea
+    platform: HackenProof
+    program_url: https://hackenproof.com/programs/citrea-protocol-and-smart-contracts
+    scope: Citrea rollup (Rust) + Clementine BitVM bridge
+    scope_url: https://github.com/chainwayxyz
+    reward_min: 100
+    reward_max: 250000
+    reward_notes: "Critical $25,000-$250,000 (10% of funds, $25,000 floor); High $10,000-$25,000; Medium $1,000-$3,000; Low $100-$1,000. Paid in USDC on Ethereum."
+    kyc: "yes"
+    submission_fee: $5/report
+    status: gated
+    last_verified: "2026-11-20"
+    notes: Triple gate — 50 HackenProof reputation points required + $5 submission fee + KYC required. 809 submissions vs $11,300 paid (strict triage).
+
+  - name: Kamino
+    platform: Sherlock
+    program_url: https://audits.sherlock.xyz/bug-bounties/433
+    scope: KLend, KVault, KFarms, Scope, Kamino Liquidity (Solana mainnet)
+    scope_url: https://github.com/Kamino-Finance/klend
+    reward_min: null
+    reward_max: 1000000
+    reward_notes: "Theft 10% of funds at risk, cap $1,000,000; irreversible loss 5%, cap $100,000; temporary freeze discretionary, cap $10,000. No minimum payouts. No Medium/Low — only Critical/High submittable."
+    kyc: "yes"
+    submission_fee: $250 USDC stake/report
+    status: gated
+    last_verified: "2026-11-19"
+    notes: $250 USDC stake per report (Polygon native USDC, refunded unless spam/AI/out-of-scope). KYC before payout only. PoC required. Live since 17 Oct 2026.
+
+  - name: Uniswap
+    platform: Cantina
+    program_url: https://cantina.xyz/bounties
+    scope: Uniswap v4 core + periphery contracts, interfaces, wallets
+    scope_url: https://github.com/Uniswap
+    reward_min: null
+    reward_max: 15500000
+    reward_notes: "Critical up to $15,500,000; High up to $1,000,000; Medium up to $100,000; Low up to $50,000. Check program page for current tiers."
+    kyc: unknown
+    submission_fee: check program page
+    status: gated
+    last_verified: "2026-11-20"
+    notes: Cantina charges per-report submission fees on most programs; a third-party aggregator (BountyOperator, Nov 2026) reports a $50 fee + KYC for Uniswap — unconfirmed, check the program page before filing. Launched 26 Nov 2024.
+
+  - name: CoW Protocol
+    platform: Immunefi
+    program_url: https://immunefi.com/bug-bounty/cowprotocol/information/
+    scope: CoW Protocol settlement contracts (Ethereum + Gnosis Chain), swap.cow.fi / cow.fi
+    scope_url: https://github.com/cowprotocol/contracts
+    reward_min: null
+    reward_max: 1000000
+    reward_notes: "Smart contracts Critical max $1,000,000; Websites/Apps Critical max $10,000. Paid in USDC on Ethereum. PoC required for all reports."
+    kyc: "yes"
+    submission_fee: Immunefi verification required to file
+    status: gated
+    last_verified: "2026-11-20"
+    notes: Immunefi-gated — filing requires platform verification (Human Passport or Skin in the Game). KYC required.
+
+  - name: Spark
+    platform: Immunefi
+    program_url: https://immunefi.com/bug-bounty/sparklend/information/
+    scope: Spark lending + savings (SparkLend, vaults, ALM), ~386 assets in scope
+    scope_url: https://github.com/marsfoundation
+    reward_min: 50000
+    reward_max: 5000000
+    reward_notes: "Smart Contract Critical $50,000-$5,000,000 (10% of funds affected); High $10,000-$100,000. Paid in DAI on Ethereum."
+    kyc: unknown
+    submission_fee: Immunefi verification required to file
+    status: gated
+    last_verified: "2026-11-20"
+    notes: Immunefi-gated — filing requires platform verification. Live since 1 Nov 2023; program page last updated 13 Nov 2026. PoC required for Critical/High.
+
+  - name: Metric
+    platform: Immunefi
+    program_url: https://immunefi.com/bug-bounty/metric/information/
+    scope: Check program page
+    scope_url: https://immunefi.com/bug-bounty/metric/information/
+    reward_min: null
+    reward_max: 500000
+    reward_notes: "Maximum bounty $500,000. Check program page for tier details."
+    kyc: unknown
+    submission_fee: Immunefi verification required to file
+    status: gated
+    last_verified: "2026-11-20"
+    notes: Immunefi-gated — filing requires platform verification. Launched 10 Nov 2026.
+
+  - name: Paxos Labs
+    platform: Immunefi
+    program_url: https://immunefi.com/bug-bounty/paxos-labs/information/
+    scope: Transit stablecoin conversion protocol + PAXGy tokenized gold (15 contracts)
+    scope_url: https://immunefi.com/bug-bounty/paxos-labs/information/
+    reward_min: 1000
+    reward_max: 500000
+    reward_notes: "Critical $10,000-$500,000 (10% of funds affected); High $5,000-$10,000; Medium $1,000. Paid in USDG on Ethereum."
+    kyc: "yes"
+    submission_fee: Immunefi verification required to file
+    status: gated
+    last_verified: "2026-11-20"
+    notes: Immunefi-gated — filing requires platform verification. KYC required. PoC required. Live since 20 Oct 2026.
+
+  - name: DAWN (USD.infra Vault)
+    platform: Immunefi
+    program_url: https://immunefi.com/bug-bounty/dawn/information/
+    scope: DAWN USD.infra Vault (Solana Anchor)
+    scope_url: https://immunefi.com/bug-bounty/dawn/information/
+    reward_min: 25000
+    reward_max: 50000
+    reward_notes: "Critical $25,000-$50,000. Check program page for other tiers."
+    kyc: unknown
+    submission_fee: Immunefi verification required to file
+    status: gated
+    last_verified: "2026-11-19"
+    notes: Immunefi-gated — filing requires platform verification. Live since Jul 2026.
+
+  - name: Folks Finance
+    platform: Immunefi
+    program_url: https://immunefi.com/bug-bounty/folksfinance/information/
+    scope: Check program page
+    scope_url: https://immunefi.com/bug-bounty/folksfinance/information/
+    reward_min: null
+    reward_max: 100000
+    reward_notes: "Maximum bounty $100,000. Check program page for tier details."
+    kyc: unknown
+    submission_fee: Immunefi verification required to file
+    status: gated
+    last_verified: "2026-11-19"
+    notes: Immunefi-gated — filing requires platform verification. Program closes 31 Dec 2026.
+
+  - name: OnRe
+    platform: Immunefi
+    program_url: https://immunefi.com/bug-bounty/onre/information/
+    scope: OnRe (Solana)
+    scope_url: https://immunefi.com/bug-bounty/onre/information/
+    reward_min: null
+    reward_max: 100000
+    reward_notes: "Maximum bounty $100,000. Check program page for tier details."
+    kyc: unknown
+    submission_fee: Immunefi verification required to file
+    status: gated
+    last_verified: "2026-11-19"
+    notes: Immunefi-gated — filing requires platform verification.
+
+  - name: RedStone
+    platform: HackenProof
+    program_url: https://hackenproof.com/programs/redstone-smart-contracts
+    scope: RedStone oracle contracts (EVM Pull model + non-EVM chains)
+    scope_url: https://github.com/redstone-finance
+    reward_min: 50
+    reward_max: 250000
+    reward_notes: "Critical $50,000-$250,000; High $10,000-$50,000; Medium $1,000-$10,000; Low $50-$1,000. Figures from secondary sources quoting the listing (reward table is JS-rendered)."
+    kyc: unknown
+    submission_fee: none
+    status: gated
+    last_verified: "2026-11-19"
+    notes: Effectively inaccessible to fresh accounts — 150 HackenProof reputation points required to file. $0 paid after 216 submissions (as of 18 Nov 2026). NOT dead — the program is live, the gate is the problem.
+
+  # ---------------- CLOSED / PAUSED ----------------
+  - name: Safe
+    platform: Self-hosted
+    program_url: https://docs.safefoundation.org/security/bug-bounty
+    scope: Safe Smart Account contracts (v1.1.1-v1.5.0) + officially supported modules
+    scope_url: https://github.com/safe-global/safe-smart-account
+    reward_min: null
+    reward_max: 1000000
+    reward_notes: "Rewards up to $1,000,000 depending on severity and impact. Paid in USDC on Ethereum."
+    kyc: unknown
+    submission_fee: none
+    status: closed
+    last_verified: "2026-11-20"
+    notes: CLOSED until 2026-12-01 — re-check after that date. Program page itself was updated 2026-11-16 and still lists terms; do not file until reopening is confirmed.
+
+  - name: Beanstalk
+    platform: Immunefi
+    program_url: https://immunefi.com/bug-bounty/beanstalk/information/
+    scope: Beanstalk stablecoin protocol, Basin, Beanstalk Farms
+    scope_url: https://github.com/BeanstalkFarms/Beanstalk
+    reward_min: null
+    reward_max: 1100000
+    reward_notes: "Maximum bounty $1,100,000 (when active)."
+    kyc: unknown
+    submission_fee: Immunefi verification required to file
+    status: paused
+    last_verified: "2026-11-20"
+    notes: PAUSED — not accepting reports (paused early Nov 2026). Immunefi vault holds $0. Live since 11 Oct 2022; page last updated 27 Oct 2026.
+
+  - name: Scroll
+    platform: Remedy
+    program_url: https://r.xyz/bug-bounty/programs
+    scope: Scroll bridge + rollup contracts (last known scope)
+    scope_url: https://github.com/scroll-tech/scroll
+    reward_min: null
+    reward_max: 1000000
+    reward_notes: "Last known tiers before removal: Critical up to $1,000,000; High $10,000-$50,000; Medium $5,000."
+    kyc: unknown
+    submission_fee: none
+    status: closed
+    last_verified: "2026-11-20"
+    notes: No longer on Remedy's public program list as of Nov 2026 — treat as closed; re-check the Remedy board before hunting.
+
+  # ---------------- DEAD ----------------
+  - name: Code4rena
+    platform: Code4rena (audit contests)
+    program_url: https://code4rena.com
+    scope: n/a — platform wound down
+    scope_url: https://code4rena.com
+    reward_min: null
+    reward_max: null
+    reward_notes: n/a — platform dead.
+    kyc: unknown
+    submission_fee: n/a
+    status: dead
+    last_verified: "2026-11-19"
+    notes: DEAD — wind-down announced 13 May 2026, last contest ended 27 May 2026. Customers migrated to Immunefi. Aggregators still list it active — do not trust them.
+
+  - name: Hats Finance
+    platform: Hats Finance
+    program_url: https://hats.finance
+    scope: n/a — platform closed
+    scope_url: https://hats.finance
+    reward_min: null
+    reward_max: null
+    reward_notes: n/a — platform dead.
+    kyc: unknown
+    submission_fee: n/a
+    status: dead
+    last_verified: "2026-11-19"
+    notes: DEAD — hosted operations closed 31 Dec 2025. Aggregators still list it active — do not trust them.
